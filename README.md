@@ -4,6 +4,7 @@
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Python](https://img.shields.io/badge/python-3.9+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Offline](https://img.shields.io/badge/network-offline-important)
 
 **Airgap Tray** は、ローカルAI生成環境のための  
 **Windows用ファイアウォール切替トレイツール**です。
