@@ -1,0 +1,13 @@
+{
+  "menu_allow": "NORMAL MODE",
+  "menu_block": "BLOCKING MODE",
+  "menu_refresh": "Refresh",
+  "menu_exit": "Exit",
+  "status_normal": "NORMAL MODE",
+  "status_generate": "BLOCKING MODE",
+  "status_unknown": "Unknown",
+  "status_label_normal": "Current: NORMAL MODE",
+  "status_label_generate": "Current: BLOCKING MODE",
+  "status_label_unknown": "Current: Unknown",
+  "about_text": "Firewall mode toggle tray tool"
+}

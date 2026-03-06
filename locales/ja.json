@@ -1,0 +1,13 @@
+{
+  "menu_allow": "ネット接続OK (NORMAL MODE)",
+  "menu_block": "ネット接続NG (BLOCKING MODE)",
+  "menu_refresh": "状態を再読込",
+  "menu_exit": "終了",
+  "status_normal": "NORMAL MODE (ネット接続OK)",
+  "status_generate": "BLOCKING MODE (ネット遮断)",
+  "status_unknown": "状態不明",
+  "status_label_normal": "現在: NORMAL MODE",
+  "status_label_generate": "現在: BLOCKING MODE",
+  "status_label_unknown": "現在: 状態不明",
+  "about_text": "ネットワーク接続／ブロック切替ツール"
+}
