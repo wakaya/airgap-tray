@@ -9,7 +9,8 @@
 **Airgap Tray** は、ローカルAI生成環境のための  
 **Windows用ファイアウォール切替トレイツール**です。
 
-A lightweight Windows tray tool that toggles the Windows Firewall outbound policy
+**Airgap Tray** is a  
+**Windows tray tool for switching firewall outbound modes**  
 for local AI generation environments.
 
 ---
@@ -21,9 +22,18 @@ for local AI generation environments.
 
 という切り替えを **ダブルクリック1回で行える**ようにします。
 
+When using generative AI, this tool lets you switch between:
+
+- **Internet allowed during normal use**
+- **Internet blocked during generation**
+
+with a **single double-click**.
+
 ---
 
-# ✨ Features
+# 日本語
+
+## ✨ Features
 
 - 🟢 トレイアイコンで現在のネットワーク状態を表示
 - 🖱 **ダブルクリックでモード切替**
@@ -34,14 +44,14 @@ for local AI generation environments.
 
 ---
 
-# 🖥 動作環境
+## 🖥 動作環境
 
 - Windows 10 / 11
 - Python 3.9 以上
 
 ---
 
-# 📦 インストール
+## 📦 インストール
 
 インストーラは不要です。  
 任意のフォルダに配置して使用できます。
@@ -49,7 +59,7 @@ for local AI generation environments.
 例：
 
 ```text
-D:\Tools\NetModeTray\
+D:\Tools\AirgapTray\
 ```
 
 以下のファイルを配置してください。
@@ -59,7 +69,6 @@ airgap_tray.pyw
 OutboundAllow.cmd
 OutboundBlock.cmd
 locales/
-requirements.txt
 ```
 
 必要なPythonパッケージをインストールします。
@@ -70,21 +79,20 @@ pip install -r requirements.txt
 
 ---
 
-# 🚀 起動
+## 🚀 起動
 
 ```bash
 python airgap_tray.pyw
 ```
 
 起動するとタスクトレイにアイコンが表示されます。
-必要に応じてショートカットを作成し、スタートアップフォルダに配置するなどしてください。
 
 ---
 
-# 🖱 操作方法
+## 🖱 操作方法
 
 | 操作 | 内容 |
-| --- | --- |
+| ----- | ----- |
 | ダブルクリック | ネットワークモード切替 |
 | 右クリック | メニュー表示 |
 | Refresh | 状態再取得 |
@@ -92,60 +100,45 @@ python airgap_tray.pyw
 
 ---
 
-# 🔄 モード
+## 🔄 モード
 
-## NORMAL MODE
+### NORMAL MODE
+
 🟢 ネット接続OK
 
 ```text
 Firewall outbound: Allow
 ```
 
-インターネット接続可能。
+インターネット接続可能
 
 ---
 
-## BLOCKING MODE
+### BLOCKING MODE
+
 🔴 ネット接続NG
 
 ```text
 Firewall outbound: Block
 ```
 
-外部通信を遮断します。  
-ローカルAI生成時に使用します。
+外部通信を遮断  
+ローカルAI生成時に使用
 
 ---
 
-# ⚠ 管理者権限
+## ⚠ 管理者権限
 
 Windows Firewall を変更するため、  
-モード切替時に **管理者権限の確認ダイアログ（UAC）** が表示される場合があります。
+モード切替時に **管理者権限の確認ダイアログ** が表示されます。
 
 これは正常な動作です。
 
 ---
 
-# 🛡 Important behavior
+## 🔁 自動起動（おすすめ）
 
-このツールは **Windows Firewall の既定の outbound policy** を切り替えます。
-
-**Blocking Mode** を有効にすると、PC からの外向き通信が広くブロックされます。
-これには以下が含まれる場合があります。
-
-- Webブラウザ
-- Windows Update
-- クラウド同期
-- メッセージアプリ
-- その他の常駐アプリ
-
-用が済んだら、確実に **Normal Mode** に戻してください。
-
----
-
-# 🔁 自動起動（おすすめ）
-
-Windows起動時に自動起動する場合：
+Windows起動時に自動起動する場合
 
 1. `airgap_tray.pyw` を右クリック
 2. **ショートカットを作成**
@@ -162,7 +155,7 @@ shell:startup
 
 ---
 
-# 🌐 言語設定
+## 🌐 言語設定
 
 通常は OS 言語を自動検出します。
 
@@ -186,7 +179,7 @@ shell:startup
 
 ---
 
-# 🧩 フォルダ構成
+## 🧩 フォルダ構成
 
 ```text
 AirgapTray/
@@ -195,7 +188,6 @@ AirgapTray/
  ├ OutboundBlock.cmd
  ├ requirements.txt
  ├ README.md
- ├ CHANGES.md
  ├ LICENSE
  └ locales/
       ├ ja.json
@@ -204,14 +196,14 @@ AirgapTray/
 
 ---
 
-# 💡 用途
+## 💡 用途
 
 このツールは主に以下の用途を想定しています。
 
 ローカル画像生成AIを  
 **完全にローカル環境で実行するための補助ツール**です。
 
-生成時のみ外部通信を遮断することで、
+生成時のみ外部通信を遮断することで
 
 - モデルの外部通信防止
 - 意図しないAPIアクセス防止
@@ -221,26 +213,247 @@ AirgapTray/
 
 ---
 
-# 🌍 English
+## ⚠ 注意
 
-Airgap Tray is a lightweight Windows tray tool that toggles the Windows Firewall outbound policy.
+このツールは Windows Firewall の既定の通信設定そのものを変更します。
 
-It allows you to quickly switch between:
+**Blocking Mode** を有効にすると、以下を含むPCからの外向き通信が  
+すべてブロックされます。
 
-- **Normal Mode (Internet allowed)**
-- **Blocking Mode (Internet blocked)**
+- Webブラウザ
+- Windows Update
+- クラウド同期
+- メッセージアプリ
 
-This is particularly useful for **local AI generation environments** such as ComfyUI or Stable Diffusion,
-where external network access should be disabled during generation.
+ですから、用が済んだら確実に **Normal Mode** に戻してください。
 
-## Important Notice
+---
 
-This tool modifies the Windows Firewall default outbound policy.
+## 🛠 初回起動時の既知の挙動
 
-When **Blocking Mode** is enabled, outbound network connections from the PC may be blocked,
-including browsers, cloud sync, update services, and messaging apps.
+一部のクリーンな Windows 環境では、初回起動時にトレイが  
+**UNKNOWN MODE** で始まることがあります。
 
-If your internet connection appears to stop working, switch back to **Normal Mode**.
+この場合は、以下の手順で初期化してください。
+
+1. トレイアイコンを一度ダブルクリックする  
+   → **OutboundBlock.cmd** が実行され、**BLOCKING MODE** に切り替わります
+2. もう一度ダブルクリックする  
+   → **OutboundAllow.cmd** が実行され、**NORMAL MODE** に戻ります
+
+この初期化後は、通常どおり動作すると思います。
+
+---
+
+# English
+
+## ✨ Features
+
+- 🟢 Shows the current network state with a tray icon
+- 🖱 **Switches modes with a double-click**
+- 🔒 Toggles the Windows Firewall outbound policy
+- ⚡ Very lightweight (almost no idle CPU usage)
+- 🌐 Supports Japanese / English
+- 🧠 Designed for local AI generation environments
+
+---
+
+## 🖥 Requirements
+
+- Windows 10 / 11
+- Python 3.9 or later
+
+---
+
+## 📦 Installation
+
+No installer is required.  
+You can place the files in any folder.
+
+Example:
+
+```text
+D:\Tools\AirgapTray\
+```
+
+Place the following files there:
+
+```text
+airgap_tray.pyw
+OutboundAllow.cmd
+OutboundBlock.cmd
+locales/
+```
+
+Install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 🚀 Launch
+
+```bash
+python airgap_tray.pyw
+```
+
+After launch, an icon will appear in the task tray.
+
+---
+
+## 🖱 Controls
+
+| Action | Description |
+| ----- | ----- |
+| Double-click | Switch network mode |
+| Right-click | Open menu |
+| Refresh | Reload current state |
+| About | Show version information |
+
+---
+
+## 🔄 Modes
+
+### NORMAL MODE
+
+🟢 Internet access allowed
+
+```text
+Firewall outbound: Allow
+```
+
+Internet connection is available.
+
+---
+
+### BLOCKING MODE
+
+🔴 Internet access blocked
+
+```text
+Firewall outbound: Block
+```
+
+Outbound communication is blocked.  
+Use this mode during local AI generation.
+
+---
+
+## ⚠ Administrator Privileges
+
+Because this tool changes Windows Firewall settings,  
+Windows may display a **UAC / administrator confirmation dialog** when switching modes.
+
+This is normal behavior.
+
+---
+
+## 🔁 Auto Start (Recommended)
+
+To launch the tool automatically when Windows starts:
+
+1. Right-click `airgap_tray.pyw`
+2. Create a shortcut
+3. Open the following:
+
+```text
+Win + R
+shell:startup
+```
+
+4. Place the shortcut in that folder
+
+The tool will then start automatically with Windows.
+
+---
+
+## 🌐 Language Settings
+
+By default, the application automatically detects the OS language.
+
+If you want to fix the language manually, create a `config.json` file.
+
+Example:
+
+```json
+{
+  "language": "ja"
+}
+```
+
+or
+
+```json
+{
+  "language": "en"
+}
+```
+
+---
+
+## 🧩 Folder Structure
+
+```text
+AirgapTray/
+ ├ airgap_tray.pyw
+ ├ OutboundAllow.cmd
+ ├ OutboundBlock.cmd
+ ├ requirements.txt
+ ├ README.md
+ ├ LICENSE
+ └ locales/
+      ├ ja.json
+      └ en.json
+```
+
+---
+
+## 💡 Intended Use
+
+This tool is mainly intended for the following use case:
+
+A helper utility for running local image-generation AI  
+in a **fully local environment**.
+
+By blocking outbound communication only during generation, it makes it easier to:
+
+- prevent unwanted external communication by models or tools
+- prevent unintended API access
+- improve operational security
+
+---
+
+## ⚠ Important Notice
+
+This tool modifies the default outbound communication policy of Windows Firewall itself.
+
+When **Blocking Mode** is enabled, all outbound network connections from the PC  
+may be blocked, including:
+
+- Web browsers
+- Windows Update
+- Cloud synchronization
+- Messaging applications
+
+So after you are done, make sure to switch back to **Normal Mode**.
+
+---
+
+## 🛠 Known Behavior on First Launch
+
+On some clean Windows environments, the tray may start in  
+**UNKNOWN MODE** on the first launch.
+
+If this happens, initialize it with the following steps:
+
+1. Double-click the tray icon once  
+   → `OutboundBlock.cmd` runs and the tray switches to **BLOCKING MODE**
+2. Double-click the tray icon again  
+   → `OutboundAllow.cmd` runs and the tray returns to **NORMAL MODE**
+
+After this initialization sequence, the tray may behave normally.
 
 ---
 
@@ -251,15 +464,3 @@ MIT License
 ```text
 Copyright (c) 2026 Jun Wakaya
 ```
-
----
-
-# 👤 Author
-
-Jun Wakaya
-
----
-
-# ⭐ If this tool helps you
-
-Feel free to ⭐ the repository.
