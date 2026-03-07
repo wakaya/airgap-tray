@@ -77,7 +77,6 @@ MSG = load_messages()
 def t(key, default=""):
     return MSG.get(key, default)
 
-
 def get_private_outbound_action():
     try:
         result = run_hidden(
@@ -86,7 +85,7 @@ def get_private_outbound_action():
                 "-NoProfile",
                 "-WindowStyle", "Hidden",
                 "-Command",
-                "(Get-NetFirewallProfile -Name Private).DefaultOutboundAction",
+                "(Get-NetFirewallProfile -Name Private).DefaultOutboundAction.ToString()",
             ]
         )
         return result.stdout.strip()
@@ -148,16 +147,36 @@ class AirgapTray:
 
     def update_status(self):
         mode = get_private_outbound_action()
-        self.current_mode = mode
+
         if mode == "Allow":
+            self.current_mode = "Allow"
             self.icon.icon = make_icon("green")
             self.icon.title = t("status_normal", "NORMAL MODE")
+
         elif mode == "Block":
+            self.current_mode = "Block"
             self.icon.icon = make_icon("red")
             self.icon.title = t("status_generate", "BLOCKING MODE")
+
+        elif mode == "NotConfigured":
+            self.run_cmd(BASE_DIR / "OutboundAllow.cmd")
+            time.sleep(1.0)
+            mode2 = get_private_outbound_action()
+
+            if mode2 == "Allow":
+                self.current_mode = "Allow"
+                self.icon.icon = make_icon("green")
+                self.icon.title = t("status_normal", "NORMAL MODE")
+            else:
+                self.current_mode = "Unknown"
+                self.icon.icon = make_icon("gray")
+                self.icon.title = t("status_unknown", "UNKNOWN MODE")
+
         else:
+            self.current_mode = "Unknown"
             self.icon.icon = make_icon("gray")
             self.icon.title = t("status_unknown", "UNKNOWN MODE")
+
         self.icon.update_menu()
 
     def run_cmd(self, cmd):

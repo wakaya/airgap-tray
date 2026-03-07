@@ -1,6 +1,6 @@
 # Airgap Tray
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-1.0.1-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Python](https://img.shields.io/badge/python-3.9+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -9,7 +9,7 @@
 **Airgap Tray** は、ローカルAI生成環境のための  
 **Windows用ファイアウォール切替トレイツール**です。
 
-A Windows tray tool that toggles firewall outbound mode
+A lightweight Windows tray tool that toggles the Windows Firewall outbound policy
 for local AI generation environments.
 
 ---
@@ -48,22 +48,23 @@ for local AI generation environments.
 
 例：
 
-```
+```text
 D:\Tools\NetModeTray\
 ```
 
 以下のファイルを配置してください。
 
-```
+```text
 airgap_tray.pyw
 OutboundAllow.cmd
 OutboundBlock.cmd
 locales/
+requirements.txt
 ```
 
 必要なPythonパッケージをインストールします。
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
@@ -71,22 +72,23 @@ pip install -r requirements.txt
 
 # 🚀 起動
 
-```
+```bash
 python airgap_tray.pyw
 ```
 
 起動するとタスクトレイにアイコンが表示されます。
+必要に応じてショートカットを作成し、スタートアップフォルダに配置するなどしてください。
 
 ---
 
 # 🖱 操作方法
 
-| 操作           |         内容           |
-|      -----     |        -----           |
+| 操作 | 内容 |
+| --- | --- |
 | ダブルクリック | ネットワークモード切替 |
-| 右クリック     |     メニュー表示       |
-| Refresh        |      状態再取得        |
-| About          |    バージョン表示      |
+| 右クリック | メニュー表示 |
+| Refresh | 状態再取得 |
+| About | バージョン表示 |
 
 ---
 
@@ -95,44 +97,61 @@ python airgap_tray.pyw
 ## NORMAL MODE
 🟢 ネット接続OK
 
-```
+```text
 Firewall outbound: Allow
 ```
 
-インターネット接続可能
+インターネット接続可能。
 
 ---
 
 ## BLOCKING MODE
 🔴 ネット接続NG
 
-```
+```text
 Firewall outbound: Block
 ```
 
-外部通信を遮断  
-ローカルAI生成時に使用
+外部通信を遮断します。  
+ローカルAI生成時に使用します。
 
 ---
 
 # ⚠ 管理者権限
 
-Windows Firewall を変更するため  
-モード切替時に **管理者権限の確認ダイアログ** が表示されます。
+Windows Firewall を変更するため、  
+モード切替時に **管理者権限の確認ダイアログ（UAC）** が表示される場合があります。
 
 これは正常な動作です。
 
 ---
 
+# 🛡 Important behavior
+
+このツールは **Windows Firewall の既定の outbound policy** を切り替えます。
+
+**Blocking Mode** を有効にすると、PC からの外向き通信が広くブロックされます。
+これには以下が含まれる場合があります。
+
+- Webブラウザ
+- Windows Update
+- クラウド同期
+- メッセージアプリ
+- その他の常駐アプリ
+
+用が済んだら、確実に **Normal Mode** に戻してください。
+
+---
+
 # 🔁 自動起動（おすすめ）
 
-Windows起動時に自動起動する場合
+Windows起動時に自動起動する場合：
 
-1. `net_mode_tray.pyw` を右クリック
+1. `airgap_tray.pyw` を右クリック
 2. **ショートカットを作成**
 3. 以下を開く
 
-```
+```text
 Win + R
 shell:startup
 ```
@@ -169,13 +188,14 @@ shell:startup
 
 # 🧩 フォルダ構成
 
-```
+```text
 AirgapTray/
  ├ airgap_tray.pyw
  ├ OutboundAllow.cmd
  ├ OutboundBlock.cmd
  ├ requirements.txt
  ├ README.md
+ ├ CHANGES.md
  ├ LICENSE
  └ locales/
       ├ ja.json
@@ -191,7 +211,7 @@ AirgapTray/
 ローカル画像生成AIを  
 **完全にローカル環境で実行するための補助ツール**です。
 
-生成時のみ外部通信を遮断することで
+生成時のみ外部通信を遮断することで、
 
 - モデルの外部通信防止
 - 意図しないAPIアクセス防止
@@ -201,54 +221,26 @@ AirgapTray/
 
 ---
 
-## 注意
-
-このツールは Windows Firewall の既定の通信設定そのものを変更します。
-
-**Blocking Mode** を有効にすると、以下を含むPCからの外向き通信が
-すべてブロックされます。
-
-- Webブラウザ
-- Windows Update
-- クラウド同期
-- メッセージアプリ
-
-ですから、用が済んだら確実に**Normal Mode** に戻してください。
-
----
-
 # 🌍 English
 
-Airgap Tray is a lightweight Windows tray tool  
-that toggles Windows Firewall outbound rules.
+Airgap Tray is a lightweight Windows tray tool that toggles the Windows Firewall outbound policy.
 
 It allows you to quickly switch between:
 
 - **Normal Mode (Internet allowed)**
 - **Blocking Mode (Internet blocked)**
 
-This is particularly useful for **local AI generation environments**  
-such as ComfyUI or Stable Diffusion where external network access  
-should be disabled during generation.
-
----
+This is particularly useful for **local AI generation environments** such as ComfyUI or Stable Diffusion,
+where external network access should be disabled during generation.
 
 ## Important Notice
 
 This tool modifies the Windows Firewall default outbound policy.
 
-When **Blocking Mode** is enabled, all outbound network connections
-from the PC may be blocked.
+When **Blocking Mode** is enabled, outbound network connections from the PC may be blocked,
+including browsers, cloud sync, update services, and messaging apps.
 
-This includes:
-
-- Web browsers
-- Windows Update
-- Cloud synchronization
-- Messaging applications
-
-If your internet connection appears to stop working,
-switch back to **Normal Mode**.
+If your internet connection appears to stop working, switch back to **Normal Mode**.
 
 ---
 
@@ -256,7 +248,7 @@ switch back to **Normal Mode**.
 
 MIT License
 
-```
+```text
 Copyright (c) 2026 Jun Wakaya
 ```
 
@@ -270,4 +262,4 @@ Jun Wakaya
 
 # ⭐ If this tool helps you
 
-Feel free to ⭐ the repository!
+Feel free to ⭐ the repository.
